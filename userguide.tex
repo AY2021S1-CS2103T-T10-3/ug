@@ -1,0 +1,195 @@
+% report.tex
+% Copyright (c) 2019, zhiayang
+
+\documentclass[11pt]{article}
+\usepackage{commondoc}
+\usepackage{polyglossia}
+\setmainlanguage[variant=british]{english}
+
+\usepackage[style=authortitle,defernumbers=true,sorting=none,bibstyle=verbose,sortlocale=en-GB]{biblatex}
+\usepackage{bibentry}
+
+\usepackage{tcolorbox}
+
+\newgeometry{a4paper, top=15mm, bottom=20.0mm, left=25.0mm, right=25.0mm, headheight=15pt}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=cyan,
+	urlcolor=magenta
+}
+
+\setminted{autogobble,style=autumn,tabsize=4}
+\renewcommand{\theFancyVerbLine}{\normalfont\fontsize{8pt}{9pt}\selectfont\arabic{FancyVerbLine}}
+
+\NewDocumentEnvironment{blockofcode}{O{} m}
+{%
+	\VerbatimEnvironment
+	\begin{listing}[!htbp]\vspace{0.5mm}\fontsize{11pt}{12pt}\selectfont%
+	\begin{minted}[autogobble,xleftmargin=2mm,xrightmargin=2mm,frame=leftline,framesep=3mm,framerule=0.3mm,#1,escapeinside=||]{#2}%
+}{%
+	\end{minted}%
+	\end{listing}%
+	\vspace{-2em}
+}
+
+\NewDocumentCommand{\inputlisting}{O{} +m +m O{11pt} O{12pt}}
+{%
+	{%
+	\captionsetup{type=listing}\vspace{0.5mm}\fontsize{#4}{#5}\selectfont%
+	\inputminted[autogobble,xleftmargin=2mm,xrightmargin=2mm,linenos=true,breaklines=true,frame=leftline,
+		framesep=3mm,framerule=0.3mm,numbersep=1.5mm,#1]{#2}{#3}
+	}
+}
+
+\NewDocumentCommand{\bulb}{}{%
+	\begingroup\normalfont\raisebox{-.3\baselineskip}{\includegraphics[height=1.5em]{images/emoji_bulb.png}}\endgroup
+}
+
+\NewDocumentCommand{\info}{}{%
+	\begingroup\normalfont\raisebox{-.3\baselineskip}{\includegraphics[height=1.5em]{images/emoji_info.png}}\endgroup
+}
+
+\NewDocumentCommand{\emojitick}{}{%
+	\begingroup\normalfont\raisebox{-.3\baselineskip}{\includegraphics[height=1.5em]{images/emoji_tick.png}}\endgroup
+}
+
+\NewDocumentCommand{\emojicross}{}{%
+	\begingroup\normalfont\raisebox{-.3\baselineskip}{\includegraphics[height=1.5em]{images/emoji_cross.png}}\endgroup
+}
+
+\NewDocumentCommand{\mono}{+m}{%
+	\hspace{0.1em}%
+	\tikz[overlay]\node[fill=blue!5,inner sep=2.5pt,anchor=text,rectangle,rounded corners=.5mm]%
+	{\texttt{\vphantom{hg}#1}};%
+	\phantom{\texttt{#1}}%
+	\hspace{0.1em}%
+}
+
+\NewDocumentCommand{\kbd}{+m}{%
+	\hspace{0.1em}%
+	\tikz[overlay]\node[fill=gray!30,inner sep=2.5pt,anchor=text,rectangle,rounded corners=.7mm]%
+	{\bld{\texttt{\vphantom{hg}#1}}};%
+	\phantom{\bld{\texttt{#1}}}%
+	\hspace{0.1em}%
+}
+
+% this gives us "figure 1a, figure 1b" for \ContinuedFloat
+\renewcommand\theContinuedFloat{\alph{ContinuedFloat}}
+
+\renewcommand{\emph}[1]{\textit{#1}}
+
+% change section heading sizes
+
+\titleformat{\subsection}
+	{\Roboto\fontsize{19pt}{24pt}\selectfont}
+	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\thesubsection\hfill}}
+	{0.0em}
+	{}
+	[{\makebox[0mm][l]{}}]
+
+\titleformat{\subsubsection}
+	{\Roboto\fontsize{16pt}{19pt}\selectfont}
+	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\thesubsubsection\hfill}}
+	{0.0em}
+	{}
+	[{\makebox[0mm][l]{}}]
+
+
+% for the dumb info things
+\newtcolorbox{infobox}{left=0.3em,colback=blue!15,colframe=blue!15}
+
+
+
+
+
+
+\title{ChopChop User Guide}
+
+\begin{document}
+\pagenumbering{gobble}
+
+% title page
+\hypersetup{pageanchor=false}
+
+\begin{center}
+
+	\vspace*{5mm}
+
+	\begin{flushleft}\begin{spacing}{3.0}
+	\hugetext{\Roboto\fontsize{32pt}{40pt}\selectfont ChopChop User Guide} \\
+	\subtext{\Roboto\fontsize{20pt}{16pt}\selectfont\tabto{2mm}Version 1.4}
+	\end{spacing}\end{flushleft}
+
+	\vspace*{30mm}
+
+	\begin{figure}[!htbp]\centering
+		\img{80mm}{images/logo.png}\vspace{5mm}
+	\end{figure}
+
+
+
+	\vfill
+	{
+		\large
+		\itl{updated}: \today  \\[0.6em]
+		\normalsize
+	}
+	\vspace*{20mm}
+
+\end{center}
+
+% end title
+
+\fancyhead{}
+
+\pagebreak
+
+\pagenumbering{roman}
+\fancyfoot{}
+\fancyfoot[C]{\thepage}
+
+\hypersetup{pageanchor=true}
+
+
+% turn off link colouring for the table of contents
+% (if not that shit will be blue)
+{
+	\hypersetup{hidelinks}
+	\tableofcontents
+	\pagebreak
+}
+
+% reset page numbering
+\pagenumbering{arabic}
+
+
+
+% \input{"parts/Part 1 - Front Matter"}
+% \input{"parts/Part 2 - User Interface"}
+\input{"parts/Part 3 - Commands"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

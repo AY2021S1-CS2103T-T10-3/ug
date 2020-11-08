@@ -1,0 +1,125 @@
+% Part 1 - Front Matter.tex
+
+\pagebreak
+\hypertarget{Introduction}{}
+\section{Introduction}
+
+ChopChop is a food recipe management system, which aims to help users manage their recipes and ingredients in an easy and effective
+manner. It is a *desktop app*, optimised for use through typing textual commands; for fast typists, ChopChop will be able to manage
+your recipes more efficiently than other applications. Even so, it also features a graphical user interface (GUI) to display
+ingredients and recipes in an interactive manner.
+
+Furthermore, our command interface also features \hyperlink{TabCompletion}{tab completion}, which will greatly increase the speed at
+which you can use ChopChop by reducing the amount of typing required.
+
+\subsection{Navigating this Document}
+	This user guide provides an in-depth guide about how to use ChopChop; simply choose a topic from the Table of Contents above to
+	find answers or get step-by-step instructions. In addition, the \hyperlink{QuickStart}{quick start guide} provides an end-to-end
+	setup process to help you get started with installing ChopChop.
+
+	Specifically, this document covers:
+	\begin{numberedlist}
+		& The components of the user interface
+		& The syntax and behaviour of the commands
+		& Detailed usage examples, with step-by-step illustrated walkthroughs
+		& Other usage notes and features
+	\end{numberedlist}
+% end subsection
+
+\subsection{Document Conventions}
+
+	In this document, some elements are styled differently for emphasis; these elements are:
+	\begin{bulletlist}
+		& \bulb{}    \tabto{20mm}--- indicating a useful piece of information that can make using ChopChop easier
+		& \info{}    \tabto{20mm}--- indicating something that you should pay attention to
+		& \mono{code}\tabto{20mm}--- indicating text that you can type into the \hyperlink{CommandBox}{command box}
+		& \kbd{enter}\tabto{20mm}--- indicating keys that you press on your keyboard
+		& \hyperlink{asdf}{link}\tabto{20mm}--- indicating clickable links
+		& \href{https://example.com}{external link}\tabto{20mm}--- indicating clickable links, leading to external websites
+	\end{bulletlist}
+% end subsection
+% end section
+
+
+\pagebreak
+\hypertarget{QuickStart}{}
+\section{Quick Start}
+
+To start using and experimenting with ChopChop, here are the steps you can follow:
+\begin{numberedlist}
+	& Ensure you have Java \bld{11} or above installed on your computer; you can obtain it from
+		\href{https://adoptopenjdk.net}{AdoptOpenJDK}.
+	& Download the latest \bld{chopchop.jar} from our \href{https://github.com/AY2021S1-CS2103T-T10-3/tp/releases}{Github Page}.
+	& Copy the file to the folder you want to use as the \emph{home folder} for your ChopChop.
+	& Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. The app starts with some
+		sample data for you to experiment with.
+	\begin{figure}[!htbp]\centering
+		\img{145mm}{images/sample_data.png}
+		\caption{The initial state of ChopChop, including sample data}
+	\end{figure}
+\end{numberedlist}
+
+Now that you have ChopChop installed, you can start to play around with the sample data — add recipes, ingredients, and more!
+Some commands you could try include:
+
+\begin{bulletlist}
+	& \mono{add ingredient milk /qty 500ml /expiry 2020-11-09} \\
+		This command adds the ingredient \enquote{milk}.
+	& \mono{add recipe milkshake /ingredient milk /qty 250ml /step Add milk /step Shake} \\
+		This command adds a recipe for \enquote{milkshake}.
+\end{bulletlist}
+
+To exit ChopChop, you can either use the \mono{quit} command, or simply close the application window.
+% end section
+
+
+
+\hypertarget{Overview}{}
+\section{Overview}
+
+ChopChop manages two key components --- ingredients and recipes --- and they will be the main pieces you will interact with.
+Common to both are names and tags, the latter of which allow you to quickly group related ingredients or recipes together,
+or to organise them in any way you desire.
+
+Names and tags are both case insensitive, so \emph{pAnCaKeS} and \emph{Pancakes} refer to the same recipe. Note that you cannot
+have duplicate recipes nor ingredients in ChopChop; items are duplicates if their names are the same.
+
+\hypertarget{OverviewRecipes}{}
+\subsection{Recipes}
+	A recipe consists of a list of ingredients and associated quantities used, as well as a list of ordered steps in textual form.
+% end subsection
+
+\hypertarget{OverviewIngredients}{}
+\subsection{Ingredients}
+	An ingredient consists of a quantity with an associated unit, and an optional expiry date. Each ingredient can have multiple
+	\emph{sets}, where each set is a given quantity of that ingredient, expiring on a certain date.
+
+	For example, you might have \emph{\SI{500}{\milli\litre}} of milk that you bought last week that expires tomorrow, while you have
+	another \emph{\SI{1.5}{\litre}} of milk that you bought today, expiring two weeks from now. ChopChop will track both these
+	\emph{sets}, and will intelligently use the earliest-expiring set when doing its accounting.
+
+	For a more in-depth look at how ChopChop handles quantities, see \hyperlink{QuantitiesAndUnits}{this section}.
+% end subsection
+
+
+\hypertarget{OverviewNameConstraints}{}
+\subsection{Name Constraints}
+
+	Recipe and ingredient names have the same constraints, of which there is only one — they cannot consist \emph{only} of a
+	\mono{\#} followed by digits, to diambiguate them from numbered references (for the tech savvy, the regular expression is
+	\mono{\#[0-9]+}).
+
+	Here are some examples of names that are valid and invalid:
+
+	\begin{nicetable}[1.3][0.4\textwidth]{ X[c,m] | X[c,m] }
+		Name            & Valid             \\ \hline
+		\mono{\#1}      & \emojicross{}     \\
+		\mono{\#1234}   & \emojicross{}     \\
+		\mono{\#asdf}   & \emojitick{}      \\
+		\mono{\#1a}     & \emojitick{}      \\
+		\mono{\#1 abc}  & \emojitick{}      \\
+		\mono{\#12 34}  & \emojitick{}      \\
+	\end{nicetable}
+% end subsection
+% end section
+

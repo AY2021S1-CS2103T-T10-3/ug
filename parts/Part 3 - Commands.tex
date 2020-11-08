@@ -1,0 +1,154 @@
+% Part 3 - Commands.tex
+
+\NewDocumentCommand{\itemref}{}{%
+	\texttt{<\#REF>}%
+}
+
+
+
+\pagebreak
+\hypertarget{Commands}{}
+\section{Commands}
+
+While ChopChop has a graphical user interface, the main method of interaction is through the use of \emph{typed commands}.
+Using these commands as described below, you can manipulate your recipes and ingredients without ever needing to move your mouse!
+
+Commands should be typed in the \hyperlink{CommandBox}{Command Box}, which also features \hyperlink{TabCompletion}{tab completion},
+which will make typing commands easier.
+
+
+\subsection{Command Syntax}
+
+	To succinctly represent the syntax of the various commands, we adopt a simple notation in this User Guide, explained below:
+
+	\begin{bulletlist}
+		& Words starting with a slash (\mono{/}) denote named parameters; these names are case sensitive (eg. \mono{/STEP} is not the
+		same as \mono{/step}).
+
+		& All the text following a named parameter \emph{belong} to it, until either the end of the input, or the next named parameter. \\
+			\bld{Example:} in \mono{/aaa eggs milk syrup /bbb sugar spice nice}, \emph{aaa} will have the value \enquote{eggs milk syrup},
+			while \emph{bbb} will have the value \enquote{sugar spice nice}.
+
+		& Words in angle brackets (eg. \mono{<name>}) denote an input that is provided by \emph{you}, the user. \\
+			\bld{Example:} in \mono{add ingredient <name> /qty <quantity>}, you would need to provide the \emph{name} and
+			the \emph{quantity}.
+
+		& Portions in square brackets (eg. \mono{[/expiry <expiry-date>]}) denote optional parts of the command. \\
+			\bld{Example:} in \mono{add ingredient <name> [/expiry <expiry-date>]}, not all ingredients will expire, so
+			the \emph{expiry date} is optional.
+
+		& Portions with trailing ellipses (eg. \mono{[/step <step>]...}) denote commands accepting one or more of the given parameter. \\
+			\bld{Example:} in \mono{add recipe <name> [/step <step>]...}, a recipe can have multiple steps, so you can specify
+			multiple \mono{/step} arguments.
+
+		& A \mono{\itemref{}} is an item reference, and is used to refer to either a recipe or an ingredient. It can either be the
+			(case-insensitive) name of the item, or it can be a number prefixed with '\#'. \\
+			\bld{Example:} \mono{\#3} refers to the third item in either the recipe or the ingredient list view. \\
+			\bld{Example:} \mono{Best Pancakes} refers to the recipe or ingredient named \emph{Best Pancakes}.
+
+		& Generally, the order of arguments is important; for example, the order of \mono{/step} determines the order of the steps in the recipe, while a \mono{/qty} in an \mono{add recipe} command can only appear after an \mono{/ingredient}.
+
+	\end{bulletlist}
+
+	\pagebreak
+	\subsubsection{Escaping Slashes}
+
+		Since ChopChop uses \mono{/} to denote argument names, it would seem that recipe and ingredient names cannot contain slashes.
+		Worry not, because you can \emph{escape} these slashes! This is done by prefixing the \mono{/} with a backslash
+		(\mono{\textbackslash}), eg. \mono{\textbackslash/}. For example, if you want to make a recipe named \mono{some / recipe},
+		you would instead use \mono{some \textbackslash/ recipe}.
+
+		In other contexts, the backslash (\mono{\textbackslash}) behaves like a normal character and doesn't do anything special.
+
+		When tab-completing names, ChopChop will automatically insert the backslashes for you, so that you don't have to worry about
+		it when typing your commands.
+
+	% end subsubsection
+
+	\hypertarget{DateFormats}{}
+	\subsubsection{Date Formats}
+
+		Across ChopChop, dates have the same format: \mono{yyyy-mm-dd}. Examples include:
+		\begin{bulletlist}
+			& \mono{2020-11-09} for the 9th of November, 2020
+			& \mono{2021-02-28} for the 28th of February, 2021
+		\end{bulletlist}
+
+		Note that each part (the year, month, and date) must always be 4, 2, and 2 digits respectively. For months and days, add a 0 to the beginning to make up 2 digits (eg. \mono{04} for April).
+
+	% end subsubsection
+% end subsection
+
+\hypertarget{TabCompletion}{}
+\subsection{Tab Completion}
+
+	Suppose you wanted to add a recipe for pancakes, and you wanted real, \emph{industrial strength} pancakes (unlike the
+	simplified recipe we'll be using below) --- the list of ingredients would look something like this:
+
+	\begin{blockofcode}{text}
+	add recipe Pancakes
+	  /ingredient flour /qty 290g
+	  /ingredient egg /qty 1
+	  /ingredient sugar /qty 60g
+	  /ingredient baking powder /qty 4tsp
+	  /ingredient baking soda /qty 0.25tsp
+	  /ingredient salt /qty 3g
+	  /ingredient milk /qty 440ml
+	  /ingredient butter /qty 60g
+	  /ingredient vanilla extract /qty 2tsp
+	  /step ...
+	\end{blockofcode}
+
+	That certainly seems cumbersome to type out in full, so what if there was a way to speed it up drastically? You can,
+	simply by pressing the \kbd{tab} key to let ChopChop \enquote{fill-in-the-blanks} for you!
+
+	\pagebreak
+	\subsubsection{Introduction to Tab Completion}
+
+		Here's what you can do instead (where \kbd{tab} represents pressing the tab key):
+		\begin{blockofcode}{text}
+		a |\kbd{tab}| r |\kbd{tab}| Pancakes
+		  /i |\kbd{tab}| f |\kbd{tab}| /q |\kbd{tab}| 290g
+		  /i |\kbd{tab}| e |\kbd{tab}| /q |\kbd{tab}| 1
+		  /i |\kbd{tab}| su |\kbd{tab}| /q |\kbd{tab}| 60g
+		  /i |\kbd{tab}| baking p |\kbd{tab}| /q |\kbd{tab}| 4tsp
+		  /i |\kbd{tab}| baking s |\kbd{tab}| /q |\kbd{tab}| 0.25tsp
+		  /i |\kbd{tab}| sa |\kbd{tab}| /q |\kbd{tab}| 3g
+		  /i |\kbd{tab}| m |\kbd{tab}| /q |\kbd{tab}| 440ml
+		  /i |\kbd{tab}| bu |\kbd{tab}| /q |\kbd{tab}| 60g
+		  /i |\kbd{tab}| v |\kbd{tab}| /q |\kbd{tab}| 2tsp
+		\end{blockofcode}
+
+		At just 126 compared to 289 keystrokes, that's more than a 50\% reduction! ChopChop will intelligently fill in commands, parameter names (eg. \mono{/ingredient}), recipe names, ingredient names, and tag names.
+
+	% end subsubsection
+
+
+
+	\subsubsection{Using Tab Completion}
+
+		How does it work? ChopChop uses the current text when completing and searches for the \emph{appropriate} matching items;
+		it knows to look for ingredient names while within an \mono{/ingredient} parameter, and to look for ingredient tags
+		instead of recipe tags when in an \mono{add ingredient} command.
+
+		\begin{infobox}
+			\info{} \hspace{.6em}%
+			\parbox{0.9\textwidth}{%
+				\bld{Note:} for tab completion to work, you must type at least one character
+				before you press \kbd{tab}. ChopChop cannot read your mind!
+			}
+		\end{infobox}
+
+		What if there are multiple items that share a prefix, for example \emph{baking powder} and \emph{baking soda} in the pancake recipe above? Worry not; pressing \kbd{tab} \emph{repeatedly} will cycle through the available completions, and they are sorted lexicographically (length, followed by alphabetical order) --- pressing \kbd{tab} after \mono{/ingredient b} would give you \emph{butter}, \emph{baking powder}, and \emph{baking soda}, in that order, before giving you \emph{butter} again.
+
+		The same thing applies to commands; \mono{f \kbd{tab}} would cycle between \mono{find} and \mono{filter}.
+
+	% end subsubsection
+% end subsection
+
+\input{"parts/Part 3.1 - General Commands"}
+\input{"parts/Part 3.2 - Recipe Commands"}
+
+% end section
+
+

@@ -1,0 +1,163 @@
+% Part 3.1 - General Commands.tex
+
+\pagebreak
+\hypertarget{GroupGeneralCommands}{}
+\subsection{General Commands}
+
+These commands are general commands that do not operate on ingredients or recipes.
+
+\hypertarget{HelpCommand}{}
+\subsubsection{Getting Help — \texttt{\bld{help}}}
+
+	This command shows a message with a link to this user guide; you can use it to easily access this page from the application.
+	The link can be clicked, and will open this page in your web browser.
+
+	Furthermore, you can also use this command to get help for specific commands. In that case, clicking the link will bring you
+	to the corresponding section in the User Guide for that command.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		help [<command-name> [<command-target>]]
+	\end{blockofcode}
+
+	Examples:
+	\begin{numberedlist}
+	& If you simply want a link to this page, you can just use \mono{help}:
+		\begin{figure}[!htbp]\centering\ContinuedFloat*
+			\img{75mm}{images/help_message_1.png}
+			\caption{The help message, with a link to this User Guide}
+		\end{figure}
+
+	& If you want help for a specific command --- for example, how to add recipes --- you can instead use \mono{help add recipe},
+		which will give you a link that brings you to that specific section:
+		\begin{figure}[!htbp]\centering\ContinuedFloat
+			\img{75mm}{images/help_message_2.png}
+			\caption{The help message for a specific command}
+		\end{figure}
+
+	\end{numberedlist}
+
+% end subsubsection
+
+
+\hypertarget{QuitCommand}{}
+\subsubsection{Quitting ChopChop — \texttt{\bld{quit}}}
+	This command quits ChopChop. You can rest assured that your data is automatically saved whenever a command is executed, so you
+	do not need to save it manually before quitting.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		quit
+	\end{blockofcode}
+% end subsubsection
+
+
+
+
+\hypertarget{UndoCommand}{}
+\subsubsection{Undoing Commands — \texttt{\bld{undo}}}
+
+	This command undoes the last undoable command. Undoable commands are commands that involve changes to recipes and ingredients stored in ChopChop. You can check the \hyperlink{CommandSummary}{command summary} for a quick list of which commands can be undone.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		undo
+	\end{blockofcode}
+
+	The most common scenario to undo a command is when accidentally deleting something; for example, suppose you wanted to delete the
+	\emph{Salted Water} recipe, but you accidentally deleted the \emph{Scrambled Eggs} recipe instead:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/undo_1.png}
+		\caption{Accidentally typing \enquote{Scrambled Eggs} instead of \enquote{Salted Water}}
+	\end{figure}
+
+	% asdf.
+	\pagebreak
+	Fear not, because fixing the mistake is a simple \mono{undo} away:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/undo_2.png}
+		\caption{Simply use the \mono{undo} command}
+	\end{figure}
+
+	After pressing \kbd{enter}, notice that the \emph{Scrambled Eggs} recipe is back:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/undo_3.png}
+		\caption{The scrambled eggs were saved}
+		\vspace{-2em} % double asdf.
+	\end{figure}
+% end subsubsection
+
+\pagebreak
+\hypertarget{RedoCommand}{}
+\subsubsection{Redoing Commands — \texttt{\bld{redo}}}
+	This command redoes the last redoable command, effectively functioning as an undo for undo itself. All undoable commands
+	(as described \hyperlink{UndoCommand}{above}) can be redone.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		redo
+	\end{blockofcode}
+
+	For example, let's say that you changed your mind, and you didn't really want those scrambled eggs anyway; you can use \mono{redo}
+	to redo the deletion of that recipe:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/redo_1.png}
+		\caption{The scrambled eggs will be deleted again}
+	\end{figure}
+
+	\pagebreak
+	After pressing \kbd{enter}, the scrambled eggs are now deleted:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/redo_2.png}
+		\caption{The scrambled eggs are now gone}
+	\end{figure}
+
+
+% end subsubsection
+
+
+
+\hypertarget{ListRecommendationCommand}{}
+\subsubsection{Listing Recommendations — \texttt{\bld{list} recommendations}}
+
+	This command allows you to switch to the recommendations pane, to view recipe recommendations. There are currently two types
+	of recommendations that ChopChop will make:
+
+	\begin{romanlist}
+		& Recipes that only use ingredients you have in stock
+		& Recipes that use ingredients that are about to expire
+	\end{romanlist}
+
+	In the second case, only ingredients that expire within the next week will be taken into account.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		list recommendations
+	\end{blockofcode}
+
+	\begin{infobox}
+		\bulb{} \hspace{.6em}%
+		\parbox{0.9\textwidth}{%
+			\bld{Tip:} For convenience, you can use either \mono{list recommendations} or \mono{list recommendation}.
+		}
+	\end{infobox}
+
+	\pagebreak
+	In this example, ChopChop knows about some \emph{Milk} that is about to expire within the next week (say, for example, it
+	is the 4th of November):
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{60mm}{images/list_recommendations_1.png}
+		\caption{There's some milk expiring on the 9th of November}
+	\end{figure}
+
+	Then, in addition to showing recipes using in-stock ingredients, it also highlights the \emph{Pancakes} recipe,
+	which uses milk:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/list_recommendations_2.png}
+		\caption{The recommendations view}
+	\end{figure}
+
+% end subsubsection
+% end subsection

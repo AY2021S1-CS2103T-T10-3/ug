@@ -1,0 +1,140 @@
+% Part 2 - User Interface.tex
+
+\pagebreak
+\hypertarget{UserInterface}{}
+\section{Navigating the User Interface}
+
+ChopChop's UI design allows users to view all of the information you need in three main tabs. However, that might lead to a slightly steeper learning curve. Hence, this section aims to give you a breakdown of the GUI's various components.
+
+Specifically, this section covers:
+\begin{numberedlist}
+	& \hypertarget{CommandBox}{Command Box}
+	& \hypertarget{CommandOutput}{Command Output}
+	& \hypertarget{RecipeButton}{Recipe Button}
+	& \hypertarget{IngredientButton}{Ingredient Button}
+	& \hypertarget{RecommendationButton}{Recommendation Button}
+	& \hypertarget{StatisticsBox}{Statistics Box}
+	& \hypertarget{RecipeTiles}{Recipe Tile}
+	& \hypertarget{IngredientTiles}{Ingredient Tile}
+	& \hypertarget{RecipeView}{Recipe View}
+	& \hypertarget{RecipeName}{Recipe Name}
+	& \hypertarget{RecipeTags}{Recipe Tags}
+	& \hypertarget{RecipeIngredients}{Recipe Ingredients}
+	& \hypertarget{RecipeSteps}{Recipe Steps}
+	& \hypertarget{MenuBar}{Menu Bar}
+\end{numberedlist}
+
+
+First, here is the overview of the components of the recipe list view in ChopChop, which you will be greeted with when first
+starting the application:
+
+\begin{figure}[!htbp]\centering\ContinuedFloat*
+	\img{145mm}{images/recipe_panel_description.png}
+	\caption{The Recipe List Panel of ChopChop}
+	\label{fig:recipe-list}
+\end{figure}
+
+
+\hypertarget{CommandBox}{}
+\subsection{Command Box}
+	ChopChop does your bidding by listening to your commands — the \emph{Command Box} is where you type your textual commands.
+	After typing your commands, press \kbd{enter} to input the command. You can also use the \kbd{up} and \kbd{down} arrow keys
+	to navigate through the history of commands you've typed previously.
+
+	To learn about the commands you can use, check out our \hyperlink{CommandSummary}{command summary} for a quick overview or
+	our \hyperlink{Commands}{commands} for a detailed list.
+
+	If you have yet to check out ChopChop's \hyperlink{TabCompletion}{tab completion} section, do drop by to learn this handy feature!
+% end subsection
+
+
+\hypertarget{CommandOutput}{}
+\subsection{Command Output}
+	ChopChop will always display textual responses to the commands you input — the \emph{Command Output} is where you can view
+	the responses.
+% end subsection
+
+
+\hypertarget{RecipeButton}{}
+\subsection{Recipe Button}
+	ChopChop is able to display all of your recipes as \hyperlink{RecipeTiles}{Recipe Tiles} in the \emph{Main Display Area} as shown in
+	\autoref{fig:recipe-list} when you press the \emph{Recipes} button. The 4 buttons at the bottom of our GUI will take on a darker
+	shade when they are currently selected.
+% end subsection
+
+
+\hypertarget{IngredientButton}{}
+\subsection{Ingredient Button}
+	ChopChop is able to display all of your ingredients as \hyperlink{IngredientTiles}{Ingredient Tiles} in the \emph{Main Display Area} as
+	shown in \autoref{fig:ingredient-list} when you press the \emph{Ingredients} button.
+% end subsection
+
+
+\hypertarget{RecommendationButton}{}
+\subsection{Recommendation Button}
+	ChopChop is able to recommend you recipes to cook if you want it to! The recipes that are recommended will be displayed as
+	\hyperlink{RecipeTiles}{Recipe Tiles} in the \emph{Main Display Area} when you press the \emph{Recommendations} button.
+% end subsection
+
+
+\hypertarget{StatisticsBox}{}
+\subsection{Statistics Box}
+	ChopChop is able to produce statistics based on the food you make! To view your ingredient or recipe usage statistics, simply
+	input into the \emph{Command Box} one of the \hyperlink{GroupStatsCommands}{\mono{stats commands}} available.
+% end subsection
+
+
+\hypertarget{RecipeTiles}{}
+\subsection{Recipe Tiles}
+	ChopChop is able to show you your recipes in the form of tiles — simply click on a tile to view the detailed information about
+	the selected recipe in the \emph{Main Display Area}, as shown in \autoref{fig:recipe-view}.
+% end subsection
+
+
+\hypertarget{IngredientTiles}{}
+\subsection{Ingredient Tiles}
+	ChopChop is able to show you your ingredients in the form of tiles, as shown in \autoref{fig:ingredient-list}.
+	In each tile, there are 5 components:
+
+	\begin{numberedlist}
+		& The \emph{Index} shows the index of the ingredient for easier referencing
+		& The \emph{Expiry Date} of the ingredient
+		& The \emph{Quantity} of the ingredient
+		& The \emph{Ingredient Name} of the ingredient
+		& The \emph{Tags} associated with the ingredient
+	\end{numberedlist}
+
+	Note: if the tags are too long, some graphical glitches might occur. This will be fixed in the next version!
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/ingredient_panel_description.png}
+		\caption{The Ingredient List Panel of ChopChop}
+		\label{fig:ingredient-list}
+	\end{figure}
+
+% end subsection
+
+
+\pagebreak
+
+\hypertarget{RecipeView}{}
+\subsection{Recipe View}
+
+	When clicking on a recipe or \hyperlink{ViewRecipeCommand}{\mono{view}}-ing it, ChopChop will show the full details of the recipe.
+	In this view, you can see the entirety of the recipe:
+
+	\begin{numberedlist}
+		& The \emph{Name} of the recipe
+		& The \emph{Tags} associated with the recipe
+		& The \emph{Ingredients} used by the recipe (along with their quantities)
+		& The \emph{Steps} involved in making the recipe
+	\end{numberedlist}
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/recipe_view_description.png}
+		\caption{The Recipe View Panel of ChopChop}
+		\label{fig:recipe-view}
+	\end{figure}
+
+% end subsection
+% end section

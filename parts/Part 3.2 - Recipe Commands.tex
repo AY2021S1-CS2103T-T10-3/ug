@@ -1,0 +1,52 @@
+% Part 3.2 - Recipe Commands.tex
+
+\pagebreak
+\hypertarget{GroupRecipeCommands}{}
+\subsection{Recipe Commands}
+
+These commands allow you to add, delete, edit, view, and make recipes.
+
+\hypertarget{ViewRecipeCommand}{}
+\subsubsection{Viewing Recipes — \texttt{\bld{view} recipe}}
+
+	This command opens the detailed view for the given recipe, allowing you to see its steps, ingredients, and tags.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		view recipe |\itemref{}|
+	\end{blockofcode}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{view recipe \#1} \\
+			This displays the first recipe currently shown in the recipe list.
+
+		& \mono{view recipe pancakes} \\
+		This displays the recipe named \enquote{pancakes}. Note that the name here is case insensitive.
+
+	\end{bulletlist}
+
+	To illustrate, in the scenario below, both \mono{\#1} and \mono{pancakes} will refer to the same recipe:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/view_recipe_1.png}
+		\caption{The recipe list view}
+	\end{figure}
+
+	\pagebreak
+	After pressing \kbd{enter}, you will see this view, showing the recipe you wish to view:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/view_recipe_2.png}
+		\caption{The detailed recipe view}
+	\end{figure}
+
+% end subsubsection
+
+
+
+
+
+
+
+% end subsection
+

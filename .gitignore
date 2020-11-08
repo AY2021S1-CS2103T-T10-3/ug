@@ -1,0 +1,10 @@
+_minted-userguide
+*.aux
+*.toc
+*.pdf
+*.xml
+*.pyf
+*.pyg
+*.aex
+*.bcf
+*.log
