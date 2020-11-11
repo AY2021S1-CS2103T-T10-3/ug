@@ -8,20 +8,15 @@ ChopChop's UI design allows users to view all of the information you need in thr
 
 Specifically, this section covers:
 \begin{numberedlist}
-	& \hypertarget{CommandBox}{Command Box}
-	& \hypertarget{CommandOutput}{Command Output}
-	& \hypertarget{RecipeButton}{Recipe Button}
-	& \hypertarget{IngredientButton}{Ingredient Button}
-	& \hypertarget{RecommendationButton}{Recommendation Button}
-	& \hypertarget{StatisticsBox}{Statistics Box}
-	& \hypertarget{RecipeTiles}{Recipe Tile}
-	& \hypertarget{IngredientTiles}{Ingredient Tile}
-	& \hypertarget{RecipeView}{Recipe View}
-	& \hypertarget{RecipeName}{Recipe Name}
-	& \hypertarget{RecipeTags}{Recipe Tags}
-	& \hypertarget{RecipeIngredients}{Recipe Ingredients}
-	& \hypertarget{RecipeSteps}{Recipe Steps}
-	& \hypertarget{MenuBar}{Menu Bar}
+	& \hyperlink{CommandBox}{Command Box}
+	& \hyperlink{CommandOutput}{Command Output}
+	& \hyperlink{RecipeButton}{Recipe Button}
+	& \hyperlink{IngredientButton}{Ingredient Button}
+	& \hyperlink{RecommendationButton}{Recommendation Button}
+	& \hyperlink{StatisticsBox}{Statistics Box}
+	& \hyperlink{RecipeTiles}{Recipe Tile}
+	& \hyperlink{IngredientTiles}{Ingredient Tile}
+	& \hyperlink{RecipeView}{Recipe View}
 \end{numberedlist}
 
 
@@ -35,6 +30,7 @@ starting the application:
 \end{figure}
 
 
+\pagebreak
 \hypertarget{CommandBox}{}
 \subsection{Command Box}
 	ChopChop does your bidding by listening to your commands — the \emph{Command Box} is where you type your textual commands.
@@ -111,6 +107,10 @@ starting the application:
 		\caption{The Ingredient List Panel of ChopChop}
 		\label{fig:ingredient-list}
 	\end{figure}
+
+	When showing the expiry date, ChopChop only displays the earliest expiry date out of all the ingredient *sets* that exist.
+	For example, if you have \emph{\SI{500}{\milli\litre}} of milk expiring on the 11th of November and \emph{\SI{1.5}{\litre}}
+	expiring on the 19th, the expiry date will be shown as the 11th.
 
 % end subsection
 

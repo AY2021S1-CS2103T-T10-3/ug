@@ -1,0 +1,230 @@
+% Part 3.5 - Command Summary.tex
+
+\pagebreak
+\hypertarget{CommandSummary}{}
+\subsection{Command Summary}
+
+For easy reference, here are the commands that ChopChop supports, listed in alphabetical order. You can click on the name of the command to go to its section in the User Guide.
+
+
+\NewDocumentCommand{\hst}{}{\hspace*{1em}}
+
+\begin{center}\renewcommand{\arraystretch}{1.5}\begin{xltabular}{\textwidth} {%
+	@{} | >{\hsize=1.13\hsize}X | >{\hsize=1.26\hsize}X | >{\hsize=1.38\hsize}X | >{\hsize=0.23\hsize}Y | @{} %
+}
+	\hline
+	\bld{Command} & \bld{Description} & \bld{Syntax Summary} & \bld{Undo} \\ \hline
+
+	\hyperlink{AddIngredientCommand}{\mono{add ingredient}}
+		& Adds a new ingredient, or increases the quantity of an existing ingredient
+		& \texttt{add ingredient <name>}            \newline
+		  \hst\texttt{[/qty <quantity>]}            \newline
+		  \hst\texttt{[/expiry <expiry-date>]}      \newline
+		  \hst\texttt{[/tag <tag-name>]...}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{AddRecipeCommand}{\mono{add recipe}}
+		& Adds a new recipe
+		& \texttt{add recipe <name>}                \newline
+		  \hst\texttt{[/ingredient <name>}          \newline
+		  \hst\hst\texttt{[/qty <quantity>]}        \newline
+		  \hst\texttt{]...}                         \newline
+		  \hst\texttt{[/step <step>]...}            \newline
+		  \hst\texttt{[/tag <tag-name>]...}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{DeleteIngredientCommand}{\mono{delete ingredient}}
+		& Completely deletes an ingredient, or removes some quantity of it
+		& \texttt{delete ingredient \itemref{}}     \newline
+		  \hst\texttt{[/qty <quantity>]}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{DeleteRecipeCommand}{\mono{delete recipe}}
+		& Completely deletes a recipe
+		& \texttt{delete recipe \itemref{}}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{EditIngredientCommand}{\mono{edit ingredient}}
+		& Edits an existing ingredient
+		& \texttt{edit ingredient \itemref{}}       \newline
+		  \hst\texttt{[/tag:<action>}               \newline
+		  \hst\hst\texttt{<tag-name>]...}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{EditRecipeCommand}{\mono{edit recipe}}
+		& Edits an existing recipe
+		& \texttt{edit recipe \itemref{}}           \newline
+		  \hst\texttt{[/name <new-name>]}           \newline
+		  \hst\texttt{[/ingredient:<action>}        \newline
+		  \hst\hst\texttt{<ingredient-name>}        \newline
+		  \hst\hst\texttt{[/qty <quantity>]}        \newline
+		  \hst\texttt{]...}                         \newline
+		  \hst\texttt{[/step:<action>[:<index>]}    \newline
+		  \hst\hst\texttt{<step>]...}               \newline
+		  \hst\texttt{[/tag:<action>}               \newline
+		  \hst\hst\texttt{<tag-name>]...}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{FilterIngredientCommand}{\mono{filter ingredient}}
+		& Searches for ingredients by one or more filtering criteria
+		& \texttt{filter ingredient}                \newline
+		  \hst\texttt{[/name <name-words>...]...}   \newline
+		  \hst\texttt{[/expiry <expiry-date>]}      \newline
+		  \hst\texttt{[/tag <tag-words>...]...}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{FilterRecipeCommand}{\mono{filter recipe}}
+		& Searches for recipes by one or more filtering criteria
+		& \texttt{filter recipe}                    \newline
+		  \hst\texttt{[/name <name-words>...]...}   \newline
+		  \hst\texttt{[/tag <tag-words>...]...}     \newline
+		  \hst\texttt{[/ingredient}                 \newline
+		  \hst\hst\texttt{<ingr-words>...]...}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{FindIngredientCommand}{\mono{find ingredient}}
+		& Searches for ingredients by their name
+		& \texttt{find ingredient <keyword>}        \newline
+		  \hst\texttt{[<keyword>]...}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{FindRecipeCommand}{\mono{find recipe}}
+		& Searches for recipes by their name
+		& \texttt{find recipe <keyword>}            \newline
+		  \hst\texttt{[<keyword>]...}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{HelpCommand}{\mono{help}}
+		& Shows help in general, or help for specific commands
+		& \texttt{help [<command-name>}             \newline
+		  \hst\texttt{[<command-target>]]}          \newline
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{ListIngredientCommand}{\mono{list ingredient}}
+		& Shows the main ingredient list, and clears any search filters
+		& \texttt{list ingredients}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{ListRecipeCommand}{\mono{list recipe}}
+		& Shows the main recipe list, and clears any search filters
+		& \texttt{list recipes}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{MakeRecipeCommand}{\mono{make recipe}}
+		& Makes a recipe by consuming ingredients
+		& \texttt{make recipe \itemref{}}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{QuitCommand}{\mono{quit}}
+		& Exits ChopChop
+		& \texttt{quit}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{RedoCommand}{\mono{redo}}
+		& Redoes a command that was previously undone
+		& \texttt{redo}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{StatsIngredientClearCommand}{\mono{stats ingredient clear}}
+		& Clear ingredient usage history
+		& \texttt{stats ingredient clear}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{StatsIngredientRecentCommand}{\mono{stats ingredient recent}}
+		& Shows recently used ingredients
+		& \texttt{stats ingredient recent}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{StatsIngredientUsedCommand}{\mono{stats ingredient used}}
+		& Shows ingredients used within a given time frame
+		& \texttt{stats ingredient used}            \newline
+		  \hst\texttt{[/after <date-time>]}         \newline
+		  \hst\texttt{[/before <date-time>]}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{StatsRecipeClearCommand}{\mono{stats recipe clear}}
+		& Clear cooked recipe history
+		& \texttt{stats recipe clear}
+		& \emojitick{}
+		\\ \hline
+
+	\hyperlink{StatsRecipeMadeCommand}{\mono{stats recipe made}}
+		& Shows recipes made within a given time frame
+		& \texttt{stats recipe made}                \newline
+		  \hst\texttt{[/after <date-time>]}         \newline
+		  \hst\texttt{[/before <date-time>]}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{StatsRecipeRecentCommand}{\mono{stats recipe recent}}
+		& Shows recently made recipes
+		& \texttt{stats recipe recent}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{StatsRecipeTopCommand}{\mono{stats recipe top}}
+		& Shows the top recipes
+		& \texttt{stats recipe top}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{UndoCommand}{\mono{undo}}
+		& Undoes a command that was previously executed
+		& \texttt{undo}
+		& \emojicross{}
+		\\ \hline
+
+	\hyperlink{ViewRecipeCommand}{\mono{view}}
+		& Opens the detailed view for a recipe
+		& \texttt{view recipe \itemref{}}
+		& \emojicross{}
+		\\ \hline
+\end{xltabular}\end{center}
+
+% end subsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

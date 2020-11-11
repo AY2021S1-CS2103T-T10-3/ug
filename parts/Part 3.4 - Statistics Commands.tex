@@ -1,0 +1,191 @@
+% Part 3.4 - Statistics Commands.tex
+
+\pagebreak
+\hypertarget{GroupStatsCommands}{}
+\subsection{Statistics Commands}
+
+Whenever you make a recipe or consume an ingredient, ChopChop makes a record, which you can view with the commands below.
+The output of these statistics commands are shown in the \hyperlink{StatisticsBox}{statistics box} on the right side of
+ChopChop's interface.
+
+
+\hypertarget{StatsRecipeTopCommand}{}
+\subsubsection{Listing Top Recipes — \texttt{\bld{stats} recipe top}}
+
+	This command shows a list of recipes that were made the most, in descending order (the recipe listed first was made the most
+	number of times).
+
+	Note that, even if a recipe was deleted (with \hyperlink{DeleteRecipeCommand}{\mono{delete recipe}}, its cooking records will still
+	exist in ChopChop. To remove these statistics, you can use \hyperlink{StatsRecipeClearCommand}{\mono{stats recipe clear}} to clear
+	them for all recipes.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		stats recipe top
+	\end{blockofcode}
+
+	For example, here is the output for someone who really really loves pancakes:
+
+	\begin{figure}[!htbp]\centering
+		\img{60mm}{images/stats_recipe_top.png}
+		\caption{No pancakes were sacrificed for this picture}
+	\end{figure}
+
+% end subsubsection
+
+
+
+
+
+\pagebreak
+\hypertarget{StatsRecipeRecentCommand}{}
+\subsubsection{Listing Recent Recipes — \texttt{\bld{stats} recipe recent}}
+
+	This command shows a list of the 10 most recently-made recipes, with the most recent one at the top of the list. As with the other
+	statistics commands, deleting a recipe from ChopChop does not delete it from this list.
+
+	Note that this is also the view that is displayed by default when no statistics commands have been used yet.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		stats recipe recent
+	\end{blockofcode}
+
+	\begin{figure}[!htbp]\centering
+		\img{60mm}{images/stats_recipe_recent.png}
+		\caption{The recently-made recipes view}
+	\end{figure}
+
+% end subsubsection
+
+
+
+\hypertarget{StatsRecipeMadeCommand}{}
+\subsubsection{Listing Recipes within a Time Frame — \texttt{\bld{stats} recipe made}}
+
+	This command shows a list of recipes that were made within the given time frame, arranged in descending chronological order.
+	You can specify the lower bound (earliest date/time), upper bound (latest date/time), both, or neither.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		stats recipe made
+			[/after <date-time>]
+			[/before <date-time>]
+	\end{blockofcode}
+
+	The format of \mono{<date-time>} is as such: \mono{yyyy-mm-dd [hh:mm]}, where \mono{yyyy-mm-dd} is the
+	\hyperlink{DateFormats}{familiar date format}, and \mono{hh:mm} is the optional time in 24-hour format (eg. \mono{18:30} for 6.30pm).
+
+	If the time component is omitted, it is assumed to be midnight of the given day. If both \mono{/before} and \mono{/after} are omitted,
+	then ChopChop shows recipes made on the current day, ie. from midnight to 23:59.
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{stats recipe made} \\
+		  This shows all recipes made since the beginning of the current day
+
+		& \mono{stats recipe made /after 2020-04-15} \\
+		  This shows all recipes made after the 15th of April, 2020
+
+		& \mono{stats recipe made /before 2020-12-25} \\
+		  This shows all recipes made before the 25th of December, 2020
+
+		& \mono{stats recipe made /after 2020-04-15 /before 2020-12-25} \\
+		  This shows all recipes made between the 15th of April and 25th of December
+
+		& \mono{stats recipe made /after 2020-01-01 08:00 /before 2020-01-01 23:00} \\
+		  This shows all recipes made between 8am and 11pm on the 1st of January
+	\end{bulletlist}
+
+	For example, \mono{stats recipe made /after 2020-11-02 /before 2020-11-04 23:00} shows this output:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{60mm}{images/stats_recipe_made_1.png}
+		\caption{Showing the recipes made between a date range}
+	\end{figure}
+
+	\pagebreak
+	Meanwhile, just executing \mono{stats recipe made} only shows the recipes made on the current day:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{60mm}{images/stats_recipe_made_2.png}
+		\caption{Showing the recipes made on the current day}
+	\end{figure}
+
+% end subsubsection
+
+
+
+
+
+
+
+
+
+\hypertarget{StatsRecipeClearCommand}{}
+\subsubsection{Clearing Recipe History — \texttt{\bld{stats} recipe clear}}
+
+	This command clears the history of the recipes that you've made from ChopChop. If you did this accidentally, don't worry,
+	because you can \hyperlink{UndoCommand}{undo} this.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		stats recipe clear
+	\end{blockofcode}
+
+% end subsubsection
+
+
+
+\pagebreak
+\hypertarget{StatsIngredientRecentCommand}{}
+\subsubsection{Listing Recent Ingredients — \texttt{\bld{stats} ingredient recent}}
+
+	This command shows a list of the 10 most recently-used ingredients consumed by \hyperlink{MakeRecipeCommand}{\mono{make}}-ing recipes.
+	It is similar to the \hyperlink{StatsRecipeRecentCommand}{\mono{stats recipe recent}} command as discussed above, except it deals
+	with ingredients.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		stats ingredient recent
+	\end{blockofcode}
+
+	For example, after having just made \emph{Scrambled Eggs}, these will be the recently-used ingredients:
+
+	\begin{figure}[!htbp]\centering
+		\img{60mm}{images/stats_ingredient_recent.png}
+		\caption{The recently used ingredients view}
+	\end{figure}
+
+% end subsubsection
+
+
+
+\hypertarget{StatsIngredientUsedCommand}{}
+\subsubsection{Listing Ingredients within a Time Frame — \texttt{\bld{stats} ingredient used}}
+
+	This command shows a list of ingredients that were used within the given time frame, arranged in descending chronological order. You can specify the lower bound (earliest date/time), upper bound (latest date/time), both, or neither.
+
+	This command behaves similarly to \hyperlink{StatsRecipeMadeCommand}{\mono{stats recipe made}} as discussed above, except that
+	\mono{made} is replaced with \mono{used} instead. Otherwise, the arguments (\mono{/before}, \mono{/after}) function identically.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		stats ingredient used
+			[/after <date-time>]
+			[/before <date-time>]
+	\end{blockofcode}
+
+% end subsubsection
+
+
+\hypertarget{StatsIngredientClearCommand}{}
+\subsubsection{Clearing Ingredient History — \texttt{\bld{stats} ingredient clear}}
+
+	This command clears the history of the ingredients that you've used in ChopChop. If you did this accidentally, don't worry, because you can \hyperlink{UndoCommand}{undo} this.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		stats ingredient clear
+	\end{blockofcode}
+
+% end subsubsection
+
+
+
+
+
+% end subsection

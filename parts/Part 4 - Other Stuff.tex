@@ -1,0 +1,112 @@
+% Part 5 - Other Stuff.tex
+
+\pagebreak
+\hypertarget{QuantitiesAndUnits}{}
+\section{Quantities and Units}
+
+In order to keep track of ingredients correctly, ChopChop needs to know about their amounts. Currently, there are 3 \enquote{kinds}
+of units supported: volume, mass (weight), and counts. Specifically, these are the supported units:
+
+\begin{nicetable}[1.3][0.45\textwidth]{ X[l,m] | X[2.5,l,m] }
+	\bld{Unit}              & \bld{Description}                         \\ \hline
+	\mono{ml}, \mono{mL}    & millilitres                               \\
+	\mono{l}, \mono{L}      & litres (\SI{1000}{\milli\litre})          \\
+	\mono{cup}, \mono{cups} & metric cup (\SI{250}{\milli\litre})       \\
+	\mono{tsp}              & metric teaspoon (\SI{5}{\milli\litre})    \\
+	\mono{tbsp}             & metric tablespoon (\SI{15}{\milli\litre}) \\
+	\mono{g}                & gram                                      \\
+	\mono{mg}               & milligram (\SI{0.001}{\gram})             \\
+	\mono{kg}               & kilogram (\SI{1000}{\gram})               \\
+\end{nicetable}
+
+Quantities without a unit are assumed to be dimensionless \enquote{counts}; for example, \bld{3} eggs. They do not need to be whole
+numbers, so that a recipe can use \bld{2.5} apples, for example.
+
+
+\subsection{Ingredient Combining}
+
+	As mentioned above, ChopChop will combine ingredients when you \mono{add} them, provided they have compatible units. Combining works
+	as you would expect, and is rather flexible; adding \mono{3 cups} of milk to an existing stock of \mono{400ml} will yield \mono{1.15l}.
+
+	However you cannot, for example, add \mono{300g} of blueberries to \mono{4} blueberries, as grams and counts are incompatible units.
+
+% end subsection
+% end section
+
+
+
+
+\pagebreak
+\hypertarget{FAQ}{}
+\section{Frequently Asked Questions}
+
+Here are some frequently asked questions about ChopChop:
+
+
+% really god-damned 3head.
+\bld{Q:}\tabto{2em} How do I save my changes? \\[1.2em]
+\bld{A:}\tabto{2em} \parbox{.95\textwidth}{ChopChop saves your changes automatically whenever a change is made, so you do not need
+					to worry about doing it manually.}
+
+\vspace{1em}
+\bld{Q:}\tabto{2em} How do I transfer my data to another computer? \\[1.2em]
+\bld{A:}\tabto{2em} \parbox{.95\textwidth}{Simply copy the folder named \mono{data} that you will find next to \mono{chopchop.jar}
+					to the new computer, and all your recipes and ingredients will be copied over as well.}
+
+\vspace{1em}
+\bld{Q:}\tabto{2em} How can I rename an ingredient? \\[.4em]
+\bld{A:}\tabto{2em} Currently, ingredients cannot be renamed.
+
+\vspace{1em}
+\bld{Q:}\tabto{2em} Why is ChopChop telling me that there are incompatible ingredients? \\[2.1em]
+\bld{A:}\tabto{2em} \parbox{.95\textwidth}{Due to the way quantities are handled, recipes need to use the same \emph{kind} of unit
+					as the ingredient you have in storage. For example, if \enquote{Butter} was recorded as \bld{mass} (in grams),
+					you can only refer to it in recipes using grams/milligrams/kilograms, but not \bld{volumes} (tablespoons/cups, etc.).}
+
+\vspace{1em}
+\bld{Q:}\tabto{2em} How can I use a unit like \mono{oz}? \\[1.2em]
+\bld{A:}\tabto{2em} \parbox{.95\textwidth}{Currently custom units are not supported in ChopChop, though they are coming in a future
+					version! We only support metric units for now.}
+
+
+% end section
+
+
+
+
+
+
+
+
+\pagebreak
+\hypertarget{Glossary}{}
+\section{Glossary}
+
+Here are some terms you might be unfamiliar with in this document, and their associated meanings:
+
+\begin{nicetable}[3][0.9\textwidth]{X[l,m] | X[3,l,m]}
+	\bld{Word/Phrase} &\bld{Meaning}    \\ \hline
+	Case Insensitive
+	& Capitalisation is not considered, eg. `aAaAaAaA` and `aaaaaaaa` are the same when comparing case insensitively    \\
+
+	Command
+	& A series of text you type into the \hyperlink{CommandBox}{Command Box} in order to perform an action in ChopChop  \\
+
+	GUI
+	& A \emph{graphical user interface}, which is the visual display that you see in ChopChop                           \\
+
+	Index
+	& A number that you can use to refer to an ingredient or recipe in a command; it appears in the top left corner of items \\
+
+	Ingredient
+	& A food item (eg. salt, butter) that you keep in stock; needed to make recipes \\
+
+	Recipe
+	& A dish that can be made using some ingredients; has a list steps to make it, and a list of ingredients used \\
+
+	Tag
+	& A word or short phrase (eg. \enquote{sweet}, \enquote{simple recipe}) that you can attach to ingredients
+	and recipes to identify them \\
+\end{nicetable}
+
+% end section

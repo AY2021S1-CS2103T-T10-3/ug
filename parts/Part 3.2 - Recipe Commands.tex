@@ -44,9 +44,521 @@ These commands allow you to add, delete, edit, view, and make recipes.
 
 
 
+\pagebreak
+\hypertarget{ListRecipeCommand}{}
+\subsubsection{Listing Recipes — \texttt{\bld{list} recipes}}
+	This command shows a list of all recipes in ChopChop. You can use this to switch panes (between recipes and ingredients) without
+	using the mouse, as well as to clear any filters that might have been applied due to previous commands (eg. \mono{find}
+	and \mono{filter}).
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		list recipes
+	\end{blockofcode}
+
+	\begin{infobox}
+		\bulb{} \hspace{.6em}\parbox{0.9\textwidth}{%
+			\bld{Tip:} For convenience, you can use either \mono{list recipes} or \mono{list recipe}.
+		}
+	\end{infobox}
+
+	Executing this command simply brings you back to the recipe list view:
+
+	\begin{figure}[!htbp]\centering
+		\img{145mm}{images/list_recipes.png}
+		\caption{The recipe list view}
+	\end{figure}
+
+% end subsubsection
 
 
 
 
+
+
+
+
+\pagebreak
+\hypertarget{AddRecipeCommand}{}
+\subsubsection{Adding Recipes — \texttt{\bld{add} recipe}}
+
+	This command adds a recipe to ChopChop, and you can specify zero or more ingredients, each with an optional quantity,
+	and zero or more steps. After a recipe is added, you will be able to see it immediately.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		add recipe <name>
+			[/ingredient <ingredient-name> [/qty <quantity>]]...
+			[/step <step>]...
+			[/tag <tag-name>]...
+	\end{blockofcode}
+
+	Constraints:
+	\begin{romanlist}
+		& Recipe name must not be empty
+		& Ingredient names must not be empty
+		& Steps must not be empty
+		& Tag names must not be empty
+		& Quantities (\mono{/qty}) must only appear after an \mono{/ingredient}
+	\end{romanlist}
+
+	If an ingredient is specified without a quantity, it is treated \emph{as if} you used \mono{/qty 1}. This works for
+	counted ingredients (eg. eggs), but it will cause errors for other ingredients (eg. volume of milk).
+
+	If the ingredient does not \emph{currently} exist in ChopChop, it is still okay to add a recipe using it (you might add it later).
+	Recipes are only checked for correctness when you try to \hyperlink{MakeRecipeCommand}{\mono{make}} them.
+
+	For example, suppose you wanted to add a recipe for pancakes using flour, eggs, and milk, you would type this:
+
+	\begin{blockofcode}{text}
+		add recipe Pancakes
+			/ingredient flour /qty 400g
+			/ingredient egg /qty 3
+			/ingredient milk /qty 250ml
+			/step Mix ingredients together
+			/step Bake for 30 minutes at 400 celsius
+			/step Pour syrup and serve
+	\end{blockofcode}
+
+	(note that this is displayed on separate lines for clarity, but you should type this in one go)
+
+	\pagebreak
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/add_recipe_1.png}
+		\caption{The add recipe command}
+	\end{figure}
+
+	After pressing \kbd{enter}, you will see this view, showing your newly created recipe:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/add_recipe_2.png}
+		\caption{The recipe detail view for the new \emph{Pancakes} recipe}
+	\end{figure}
+
+	If you go back to the main recipe view (either by clicking on the tab at the bottom, or by using \mono{list recipes},
+	you can see the new recipe in the list:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/add_recipe_3.png}
+		\caption{The newly created recipe in the recipe list}
+	\end{figure}
+
+% end subsubsection
+
+
+
+\pagebreak
+\hypertarget{EditRecipeCommand}{}
+\subsubsection{Editing Recipes — \texttt{\bld{edit} recipe}}
+
+	This command edits a specific recipe in ChopChop, letting you perform different actions on the name, ingredients, steps, and tags, as specified below.
+
+	To accommodate the various different kinds of editing operations, ChopChop has special syntax for editing, known as \emph{edit-arguments}, eg. \mono{/step:add}. The component following the colon is the \emph{action}, which can take these values:
+
+	\begin{bulletlist}
+		& For ingredients and steps, it can either be \mono{add}, \mono{edit}, or \mono{delete}.
+		& For tags, it can be either \mono{add} or \mono{delete}.
+	\end{bulletlist}
+
+	\paragraph{Name}
+	If you want to edit a recipe's name, simply use \mono{/name}, for example \mono{/name new recipe name}.
+
+
+	\paragraph{Ingredients}
+	If you want to edit a recipe's ingredients, use \mono{/ingredient} with an action (eg. \mono{/ingredient:add}).
+	When adding or editing ingredients, a \mono{/qty} \emph{must} be specified after the ingredient.
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{/ingredient:add milk /qty 500ml} \\
+		  This makes the recipe require 500ml of milk; if the recipe already used milk, then an error is displayed --- here, you should use \mono{/ingredient:edit} instead.
+
+		& \mono{/ingredient:edit beef /qty 200g} \\
+		  This changes the quantity of beef used in the recipe from its previous value to 200 grams. If the recipe did not use beef as an ingredient, an error is displayed --- here, you should use \mono{/ingredient:add} instead.
+
+		& \mono{/ingredient:delete carrot} \\
+		  This removes carrots from the recipe entirely. If the recipe did not use carrots, then an error is displayed.
+	\end{bulletlist}
+
+	\paragraph{Tags}
+	If you want to edit the tags for a recipe, use \mono{/tag} with an action, which are either \mono{add} or \mono{delete}.
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{/tag:add vegetarian} \\
+		  This adds the \enquote{vegetarian} tag to the recipe. If the recipe already contains this tag, an error is displayed.
+
+		& \mono{/tag:delete cold} \\
+		  This removes the \enquote{cold} tag from the recipe. If the recipe did not have this tag, an error is displayed.
+	\end{bulletlist}
+
+
+	\paragraph{Steps}
+	Since steps have a fixed ordering in a recipe, editing them is slightly more involved; when editing or deleting steps, you are required to provide the step number as an additional component in the \emph{edit-argument}. For example, \mono{/step:edit:3} edits the third step in the recipe.
+
+	When adding a step, the step number is optional; if not specified, the new step will be added as the last step. If it is specified, then the new step will be inserted at the corresponding position, and the following steps will be re-numbered.
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{/step:add Bake for 80 minutes at 400 C}
+		  This adds a new step as the last step of the recipe.
+
+		& \mono{/step:edit:4 Bake for 50 minutes at 250 C}
+		  This changes the content of step number 4.
+
+		& \mono{/step:delete:1}
+		  This deletes the first step of the recipe.
+	\end{bulletlist}
+
+	Note that steps must be added sequentially; for instance, you cannot add step 5 to a recipe with only 2 steps.
+
+
+	\paragraph{Usage}
+
+	Except \mono{/name} (which can only appear once), all of the edit operations described above can appear multiple times, in any order, in a single \mono{edit recipe} command. Each operation is processed sequentially from left-to-right, so if two operations modify the same item, then the second one will take precedence.
+
+	(As an example, \mono{/step:edit:3 Bake ... /step:edit:3 Fry} will cause step 3 to be \enquote{Fry})
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		edit recipe |\itemref{}|
+			[/name <new-recipe-name>]
+			[/ingredient:<action> <ingredient-name> [/qty <quantity>]]...
+			[/step:<action>[:<index>] <step>]...
+			[/tag:<action> <tag-name>]...
+	\end{blockofcode}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{edit recipe \#4 /name soup} \\
+			This changes the name of the fourth recipe in the recipe list to \enquote{soup}.
+
+		& \mono{edit recipe pancakes /ingredient:add syrup /qty 500ml} \\
+			This edits the recipe named \enquote{pancakes} by adding 500ml of syrup to its ingredient list.
+
+		& \mono{edit recipe risotto /step:edit:1 In a saucepan, warm the broth over low heat} \\
+		  This edits the recipe named \enquote{risotto} by changing the 1st step to the text above.
+
+		& \mono{edit recipe beef curry /ingredient:delete apple /step:delete:4} \\
+		  This edits the recipe named \enquote{beef curry} to remove both the ingredient \enquote{apple} as well as the 4th step.
+	\end{bulletlist}
+
+	\pagebreak
+	To illustrate how to use this powerful command, let us recreate the Pancake recipe from above, starting from a blank recipe instead. First, we make the empty recipe using \mono{add recipe Pancakes}:
+
+	\vspace{-.5em} % asdf
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/edit_recipe_1.png}
+		\caption{The empty recipe}
+	\end{figure}
+	\vspace{-1.5em} % asdf.
+
+	Now, let's add our ingredients, using \mono{/ingredient:add}; first, 400 grams of flour:
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_2.png}
+		\caption{The command to add a new ingredient to the recipe}
+	\end{figure}
+
+
+	\pagebreak
+	Next, adding the eggs and milk in one go:
+	\vspace{-.5em} % asdf
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_3.png}
+		\caption{The edit command supports multiple operations at once}
+	\end{figure}
+	\vspace{-1.5em} % asdf.
+
+	Oops, that's too many eggs, so let's edit the quantity using \mono{/ingredient:edit}:
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_4.png}
+		\caption{Editing an ingredient to change its quantity}
+	\end{figure}
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_5.png}
+		\caption{The recipe now uses only 3 eggs}
+	\end{figure}
+
+	Now let's add the steps with \mono{/step:add}:
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_6.png}
+		\caption{Multiple steps can be added at the same time}
+	\end{figure}
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_7.png}
+		\caption{The finished recipe}
+	\end{figure}
+
+
+	Wait, we forgot to mix the ingredients together! Let's fix it by inserting a new step 2 with \mono{/step:add:2}:
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_8.png}
+		\caption{Adding a new step in the second position}
+	\end{figure}
+
+	Oh no, we also forgot the most important thing --- syrup! So let's modify the last step (4) to include syrup with \mono{/step:edit:4}:
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_9.png}
+		\caption{Editing the last step}
+	\end{figure}
+	\vspace{-3em} % double asdf.
+
+	And now the pancake recipe is complete!
+	\vspace{-1em} % triple asdf.
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/edit_recipe_10.png}
+		\caption{The finished recipe}
+	\end{figure}
+
+% end subsubsection
+
+
+
+
+
+
+
+
+
+\hypertarget{DeleteRecipeCommand}{}
+\subsubsection{Deleting Recipes — \texttt{\bld{delete} recipe}}
+
+	This command deletes a specific recipe from ChopChop. Don't worry if you did this accidentally, because commands can be undone!
+	(see: \hyperlink{UndoCommand}{undo}).
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		delete recipe |\itemref{}|
+	\end{blockofcode}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{delete recipe \#4} \\
+			This deletes the fourth recipe in the recipe list.
+		& \mono{delete recipe pancakes} \\
+			This deletes the recipe named \enquote{pancakes}. Note that the name here is case insensitive.
+	\end{bulletlist}
+
+	In this example, both \mono{delete recipe \#7} and \mono{delete recipe pancakes} will delete the \emph{Pancakes} recipe:
+
+
+	\begin{figure}[!htbp]\centering
+		\img{145mm}{images/delete_recipe_1.png}
+		\caption{The pancakes recipe can be referred to either by name or by number}
+	\end{figure}
+
+% end subsubsection
+
+
+\pagebreak
+\hypertarget{FindRecipeCommand}{}
+\subsubsection{Finding Recipes — \texttt{\bld{find} recipe}}
+
+	This command finds all recipes containing the given keywords in the name.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		find recipe
+			<keyword>
+			[<keyword>]...
+	\end{blockofcode}
+
+	Constraints:
+	\begin{romanlist}
+		& At least one search keyword must be given
+	\end{romanlist}
+
+	Only the recipe name is searched, and only full words are matched, case-insensitively. In the case of multiple search k
+	eywords, recipes containing \bld{any} of those words will be returned.
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{find recipe cake} will match \emph{Chocolate Cake} and \emph{Strawberry Cake}, but \bld{not} \emph{Pancakes}.
+		& \mono{find recipe milk cake} will match \emph{Milk Tea} and \emph{Carrot Cake}.
+	\end{bulletlist}
+
+
+	To illustrate, if you want to search for recipes with names containing \enquote{cake}, you can use the command \mono{find recipe cake}:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/find_recipe_1.png}
+		\caption{The initial list of recipes}
+	\end{figure}
+
+	After executing the command, the recipe list has changed to only show the matching recipes, and the item numbers
+	in the corners have changed too. As explained above, the \enquote{Pancakes} recipe was not included in this list:
+	\vspace{-1em} % asdf
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/find_recipe_2.png}
+		\caption{The recipes containing \enquote{cake}}
+	\end{figure}
+
+	\vspace{-1.5em} % double asdf
+	To go back to the full recipe view (resetting the search filter), you can either click the Recipes button at the bottom, or run the
+	\mono{list recipes} command:
+
+	\vspace{-1.5em} % triple asdf
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/find_recipe_3.png}
+		\caption{Back to the main recipe list}
+	\end{figure}
+	\vspace{-3em} % quadruple asdf
+
+% end subsubsection
+
+
+
+
+
+
+
+
+\hypertarget{FilterRecipeCommand}{}
+\subsubsection{Filtering Recipes — \texttt{\bld{filter} recipe}}
+
+	This command filters all recipes and lists those containing the given name, tag and ingredient keywords. Unlike the
+	\hyperlink{FindRecipeCommand}{\mono{find recipe}} command, the search terms here have to \bld{all} match a recipe for it to be found.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		filter recipe
+			[/name <name-keywords>...]...
+			[/tag <tag-keywords>...]...
+			[/ingredient <ingredient-keywords>...]...
+	\end{blockofcode}
+
+	\begin{bulletlist}
+		& Keywords do not have to be complete to match the name, tag or ingredient names.
+		& Multiple search terms from the same category are allowed, for example \mono{/tag movie /tag family}.
+		& Search terms can be placed in any order.
+		& The filtering is case-insensitive and allows spaces between keywords in a single search term. For example,
+			\mono{/tag family favourite} is allowed.
+	\end{bulletlist}
+
+	Constraints:
+	\begin{romanlist}
+		& At least one search term must be given, and they should be either \mono{/name}, \mono{/tag} or \mono{/ingredient}.
+		& Search terms must not be empty.
+	\end{romanlist}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{filter recipe /name ginger} \\
+		  This matches \emph{Gingerbread Man} and \emph{Ginger Chicken Soup}, the only recipes whose names include \emph{ginger}.
+
+		& \mono{filter recipe /name sweet /name cake} \\
+		  This matches \emph{Sweet Choco Cake} and \emph{Sweet Caramel Cake}, the only recipes whose names include
+		  \bld{both} \emph{sweet} and \emph{cake}.
+
+		& \mono{filter recipe /tag family reunion} \\
+		  This matches \emph{Spring Rolls} and \emph{Hot Pot}, the only recipes tagged \emph{family reunion}.
+
+		& \mono{filter recipe /tag snacks /tag sweet}  \\
+		  This matches \emph{Chocolate Cookie} and \emph{Gummy Bears}, the only recipes tagged \bld{both}
+		  \emph{snacks} and \emph{sweet}.
+
+		& \mono{filter recipe /ingredient eggs}  \\
+		  This matches \emph{Egg Tart} and \emph{Scrambled Eggs}, assuming they are the only recipes using \emph{eggs}.
+
+		& \mono{filter recipe /ingredient chicken /ingredient cheese /ingredient pineapple}  \\
+		  This matches \emph{Chicken Quesadilla}, assuming it is the only recipe using \emph{chicken},
+		  \emph{cheese}, and \emph{pineapple}.
+
+		& \mono{filter recipe /tag local dish /name chicken /ingredient chicken /ingredient} \\
+			\mono{white rice /tag family favourite /name rice}  \\
+		  This matches \emph{Chicken Rice}, assuming it is the only recipe that matches all the criteria specified.
+	\end{bulletlist}
+
+	\pagebreak
+	To illustrate, suppose you had the following two recipes:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{50mm}{images/filter_recipe_1.png}
+		\hspace{2em}
+		\img{50mm}{images/filter_recipe_2.png}
+		\vspace{1em}
+		\caption{The starting recipes}
+	\end{figure}
+	\vspace{-1.5em}
+
+	Then, if you wanted to search for recipes with tags \emph{christmas} and \emph{baked}, using ingredients \emph{honey},
+	\emph{ginger root}, and \emph{molasses}, and whose names contain keywords \emph{men} and \emph{bread}, you would use this command:
+	(separated into lines for clarity):
+
+	\begin{blockofcode}{text}
+	filter recipe
+		/name men /name bread
+		/tag christmas /tag baked
+		/ingredient honey /ingredient ginger /ingredient molasses
+	\end{blockofcode}
+
+	After executing the command, similar to the effect of \hyperlink{FindRecipeCommand}{\mono{find recipe}} command, the recipe list
+	has changed, showing only the matching recipe, \emph{Gingerbread Men}:
+
+	\vspace{-1em} % asdf
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/filter_recipe_3.png}
+		\caption{Only one recipe matched all the provided criteria}
+	\end{figure}
+	\vspace{-3em} % double asdf
+
+	\pagebreak
+	Note the following:
+	\begin{bulletlist}
+		& \mono{ginger} found the ingredient \emph{ginger root}
+		& \mono{baked} found the tag \emph{home baked}
+		& \mono{men} and \mono{bread} found the name \emph{Gingerbread Men}
+	\end{bulletlist}
+
+	To reset the search filter or go back to the full recipe view, you can click the Recipes button or run the \mono{list recipes} command.
+
+% end subsubsection
+
+
+
+
+\hypertarget{MakeRecipeCommand}{}
+\subsubsection{Making Recipes — \texttt{\bld{make} recipe}}
+
+	This command allows you to \emph{make} a recipe, which will add it to the statistics tracker, and deduct the appropriate amounts from ChopChop's internal ingredient inventory.
+
+	If you do not have sufficient ingredients to make the recipe, an error message is shown. After the recipe is made, you will be brought to the ingredient list showing the updated ingredient amounts.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		make recipe |\itemref{}|
+	\end{blockofcode}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{make recipe pancakes} \\
+		  This makes the recipe named \enquote{pancakes}. Note that the name here is case insensitive.
+	\end{bulletlist}
+
+	\pagebreak
+	To illustrate, suppose you wanted to make the pancakes here, you would use \mono{make recipe pancakes}. You can run this command from any view (not necessarily from the recipe detail view):
+	\vspace{-1em} % asdf
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/make_recipe_1.png}
+		\caption{Making pancakes}
+	\end{figure}
+	\vspace{-2em} % asdf
+
+	After pressing \kbd{enter}, ChopChop will open up the recipe that you've just made:
+	\vspace{-.5em} % asdf
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/make_recipe_2.png}
+		\caption{The detailed recipe view}
+	\end{figure}
+
+	\pagebreak
+	If there are ingredients that are missing, or that you have insufficient amounts of, ChopChop will display this message in the command output window:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{50mm}{images/make_recipe_3.png}
+		\caption{Insufficient ingredients to make the pancakes}
+	\end{figure}
+
+	Furthermore, if the recipe used ingredients having incompatible units with existing ingredients (eg. you have Butter in grams,
+	but the recipe calls for Butter in tablespoons), then an error is also shown. In this situation, you should
+	\hyperlink{EditRecipeCommand}{edit the recipe} so that it uses the correct units.
+
+% end subsubsection
 % end subsection
 

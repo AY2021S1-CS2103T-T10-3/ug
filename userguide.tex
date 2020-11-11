@@ -9,9 +9,10 @@
 \usepackage[style=authortitle,defernumbers=true,sorting=none,bibstyle=verbose,sortlocale=en-GB]{biblatex}
 \usepackage{bibentry}
 
+\usepackage{xltabular}
 \usepackage{tcolorbox}
 
-\newgeometry{a4paper, top=15mm, bottom=20.0mm, left=25.0mm, right=25.0mm, headheight=15pt}
+\newgeometry{top=15mm, bottom=20.0mm, left=25.0mm, right=25.0mm, headheight=15pt}
 
 \hypersetup{
 	colorlinks=true,
@@ -81,16 +82,23 @@
 
 % change section heading sizes
 
+\titleformat{\section}
+	{\Roboto\fontsize{25pt}{30pt}\selectfont\color[HTML]{e46c0a}}
+	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\color{Black}\thesection\hfill}}
+	{0.0em}
+	{}
+	[{\makebox[0mm][l]{}}]
+
 \titleformat{\subsection}
-	{\Roboto\fontsize{19pt}{24pt}\selectfont}
-	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\thesubsection\hfill}}
+	{\Roboto\fontsize{19pt}{24pt}\selectfont\color[HTML]{e46c0a}}
+	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\color{Black}\thesubsection\hfill}}
 	{0.0em}
 	{}
 	[{\makebox[0mm][l]{}}]
 
 \titleformat{\subsubsection}
-	{\Roboto\fontsize{16pt}{19pt}\selectfont}
-	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\thesubsubsection\hfill}}
+	{\Roboto\fontsize{16pt}{19pt}\selectfont\color[HTML]{e46c0a}}
+	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\color{Black}\thesubsubsection\hfill}}
 	{0.0em}
 	{}
 	[{\makebox[0mm][l]{}}]
@@ -99,7 +107,29 @@
 % for the dumb info things
 \newtcolorbox{infobox}{left=0.3em,colback=blue!15,colframe=blue!15}
 
+% somebody doesn't like serif
+% \setmainfont[Scale=MatchLowercase,
+% 	UprightFont     = SF-Pro-Text-Regular,
+% 	ItalicFont      = SF-Pro-Text-RegularItalic,
+% 	BoldFont        = SF-Pro-Text-Medium,
+% 	BoldItalicFont  = SF-Pro-Text-MediumItalic]{SF-Pro}
 
+
+% asdf.
+\renewenvironment{bulletlist}{%
+\begin{easylist}[itemize]\ListProperties(Margin=.75em,Space*=-1em,Space=-1em)
+}{\end{easylist}}
+
+\renewenvironment{romanlist}{%
+\begin{easylist}[enumerate]\ListProperties(Margin=.75em,Space*=-1em,Space=-1em,Numbers=r)
+}{\end{easylist}}
+
+\renewenvironment{numberedlist}{%
+\begin{easylist}[enumerate]\ListProperties(Margin=.75em,Space*=-1em,Space=-1em,Numbers=a)
+}{\end{easylist}}
+
+% for xtabular, horizontally-centred in an X
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 
 
@@ -155,7 +185,7 @@
 % turn off link colouring for the table of contents
 % (if not that shit will be blue)
 {
-	\hypersetup{hidelinks}
+	% \hypersetup{hidelinks}
 	\tableofcontents
 	\pagebreak
 }
@@ -165,9 +195,10 @@
 
 
 
-% \input{"parts/Part 1 - Front Matter"}
-% \input{"parts/Part 2 - User Interface"}
+\input{"parts/Part 1 - Front Matter"}
+\input{"parts/Part 2 - User Interface"}
 \input{"parts/Part 3 - Commands"}
+\input{"parts/Part 4 - Other Stuff"}
 
 
 

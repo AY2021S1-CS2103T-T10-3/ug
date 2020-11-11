@@ -1,0 +1,346 @@
+% Part 3.3 - Ingredient Commands.tex
+
+\pagebreak
+\hypertarget{GroupIngredientCommands}{}
+\subsection{Ingredient Commands}
+
+These commands allow you to add, delete, and edit ingredients.
+
+\hypertarget{ListIngredientCommand}{}
+\subsubsection{Listing Ingredients — \texttt{\bld{list} ingredients}}
+
+	This command shows a list of all recipes in ChopChop. As with the \mono{list recipes} command, you can use this command to switch
+	between panes without clicking, or to reset any filters.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		list ingredients
+	\end{blockofcode}
+
+	\begin{infobox}
+		\bulb{} \hspace{.6em}\parbox{0.9\textwidth}{%
+			\bld{Tip:} For convenience, you can use either \mono{list ingredients} or \mono{list ingredient}.
+		}
+	\end{infobox}
+
+	Executing this command simply brings you back to the ingredient list view:
+
+	\begin{figure}[!htbp]\centering
+		\img{145mm}{images/list_ingredients.png}
+		\caption{The ingredient list view}
+	\end{figure}
+
+% end subsubsection
+
+
+\pagebreak
+\hypertarget{AddIngredientCommand}{}
+\subsubsection{Adding Ingredients — \texttt{\bld{add} ingredient}}
+
+	This command adds an ingredient to ChopChop, with an optional quantity and expiry date:
+	\begin{bulletlist}
+		& If the quantity is not specified, ChopChop will infer \bld{1} of a counted quantity, like eggs.
+		& If the expiry date is not specified, it is assumed that the ingredient (eg. salt) does not expire.
+	\end{bulletlist}
+
+	As mentioned in the \hyperlink{OverviewIngredients}{overview above}, an ingredient can consist of multiple sets;
+	the \mono{add ingredient} command will intelligently \emph{combine} ingredients as appropriate.
+
+	\begin{infobox}
+		\info{}\hspace{.6em}\parbox{0.9\textwidth}{%
+			\bld{Note:} Ingredients need to have compatible units in order to be combined;
+			see \hyperlink{QuantitiesAndUnits}{this section} for how it works.
+		}
+	\end{infobox}
+
+	If the new ingredient has \mono{/tag} options that are not present in the existing ingredient, then they are added as well.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		add ingredient <name>
+			[/qty <quantity>]
+			[/expiry <expiry-date>]
+			[/tag <tag-name>]...
+	\end{blockofcode}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{add ingredient milk /qty 1l /expiry 2020-11-09} \\
+		  This adds one litre of milk that expires on the 9th of November.
+
+		& \mono{add ingredient egg /expiry 2020-12-25} \\
+		  This adds \bld{one} egg that expires on Christmas day.
+	\end{bulletlist}
+
+	\pagebreak
+	Suppose you just finished a grocery run, and want to add the items to ChopChop. First, you have 2 cartons of milk:
+	\vspace{-.5em} % asdf
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/add_ingredient_1.png}
+		\caption{Adding 2 litres of milk}
+	\end{figure}
+	\vspace{-1.5em} % asdf
+	Since ChopChop did not know about \enquote{milk} previously, a new ingredient entry is created for it:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/add_ingredient_2.png}
+		\caption{The newly added milk ingredient}
+	\end{figure}
+
+	\pagebreak
+	Next, suppose you also bought 24 blueberries:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/add_ingredient_3.png}
+		\caption{Adding 24 blueberries}
+	\end{figure}
+	\vspace{-1.5em} % asdf
+
+	This time, since ChopChop already knew about blueberries, our previous 19 blueberries now become 43:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/add_ingredient_4.png}
+		\caption{You now have 43 blueberries}
+	\end{figure}
+
+	If you try to add an ingredient with incompatible quantities (for example, suppose you did not want to count the blueberries
+	individually, and you only know that you bought a 400 gram box), ChopChop will display an error message,
+	and not update the ingredient:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{75mm}{images/add_ingredient_5.png}
+		\caption{Ingredients must have compatible units to be combined}
+	\end{figure}
+
+% end subsubsection
+
+
+
+
+
+
+
+
+
+
+
+\hypertarget{DeleteIngredientCommand}{}
+\subsubsection{Deleting Ingredients — \texttt{\bld{delete} ingredient}}
+
+	This command deletes a specific ingredient from ChopChop. Similar to the \mono{add ingredient} command, this command also allows
+	you to delete quantities of ingredients instead of the whole ingredient. In this scenario, ChopChop will intelligently remove the
+	earliest-expiring ingredients first.
+
+	If \mono{/qty} is not specified, then the behaviour of this command is to completely remove the ingredient from ChopChop.
+	Worry not: if you accidentally delete something, you can always \hyperlink{UndoCommand}{\mono{undo}} it.
+
+	\begin{infobox}
+		\info{}\hspace{.6em}\parbox{0.9\textwidth}{%
+			\bld{Note:} If specified, the quantity needs to have compatible units with the existing ingredient;
+			see \hyperlink{QuantitiesAndUnits}{this section} for how it works.
+		}
+	\end{infobox}
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		delete ingredient |\itemref{}|
+			[/qty <quantity>]
+	\end{blockofcode}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{delete ingredient \#4} \\
+		  This deletes the fourth ingredient currently shown in the recipe list.
+
+		& \mono{delete ingredient milk /qty 500ml} \\
+		  This removes \SI{500}{\milli\litre} of milk from ChopChop's inventory.
+	\end{bulletlist}
+
+	\pagebreak
+	To illustrate, suppose that you poured yourself a glass of cold milk to drink, without making a recipe. To tell ChopChop that there is less milk in the fridge, you would use this command:
+	\vspace{-.5em} % asdf
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/delete_ingredient_1.png}
+		\caption{Removing 350ml of milk}
+	\end{figure}
+	\vspace{-2em} % asdf
+
+	Notice how the amount of milk decreased from \SI{2}{\litre} to \SI{1.65}{\litre}:
+	\vspace{-.5em}
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/delete_ingredient_2.png}
+		\caption{You now only have 1.65 litres of milk left}
+	\end{figure}
+	\vspace{-1.5em}
+
+% end subsubsection
+
+
+
+
+
+
+
+
+
+
+
+\hypertarget{FindIngredientCommand}{}
+\subsubsection{Finding Ingredients — \texttt{\bld{find} ingredient}}
+
+	This command finds all ingredients containing the given keywords in the name, and it works identically to the
+	\hyperlink{FindRecipeCommand}{\mono{find recipe}} command above.
+
+	Constraints:
+	\begin{romanlist}
+		& At least one search keyword must be given
+	\end{romanlist}
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		find ingredient
+			<keyword>
+			[<keyword>]...
+	\end{blockofcode}
+
+	For example, suppose you wanted to find all ingredients containing fish (not in the literal sense, but only in their name):
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/find_ingredient_1.png}
+		\caption{The complete ingredient list}
+	\end{figure}
+
+	\pagebreak
+	Now, only the matching ingredients are shown:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/find_ingredient_2.png}
+		\caption{Only ingredients containing \enquote{fish} in their name are shown}
+	\end{figure}
+
+	To clear the search filter, you can either click the \emph{Ingredients} button, or use \mono{list ingredients} to return
+	to the list of ingredients.
+
+% end subsubsection
+
+
+
+
+
+\hypertarget{FilterIngredientCommand}{}
+\subsubsection{Filtering Ingredients — \texttt{\bld{filter} ingredient}}
+
+	This command filters all ingredients and lists those matching the name keywords, tags, and expiry dates specified in the command.
+	Except for the changes in the search fields, this feature works identically to the
+	\hyperlink{FilterRecipeCommand}{\mono{filter recipe}} command above. Notably, \bld{all} the search terms have to match an
+	ingredient before it is found.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		filter ingredient
+			[/name <name-keywords>...]...
+			[/tag <tag-keywords>...]...
+			[/expiry <expiry-date>]
+	\end{blockofcode}
+
+	\begin{bulletlist}
+		& Keywords following \mono{/tag} and \mono{/name} do not have to be complete to match the tag or the ingredient's name.
+		& Expiry dates (\mono{/expiry <expiry-date>}) filter only ingredients that expire before the date provided, and if there are
+			multiple expiry dates specified, only the earliest one will be considered.
+	\end{bulletlist}
+
+	Constraints:
+	\begin{romanlist}
+		& At least one search term must be given, and they should be either \mono{/name}, \mono{/expiry} or \mono{/tag}.
+		& Search terms must not be empty.
+	\end{romanlist}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{filter ingredient /name dark chocolate} \\
+		  This matches \emph{dark chocolate} and \emph{dark chocolate syrup}, assuming they are the only ingredients whose
+		  names contain \emph{dark chocolate}.
+
+		& \mono{filter ingredient /name dark chocolate /name syrup} \\
+		  This matches \emph{dark chocolate syrup}, assuming it is the only ingredient whose name contains \bld{both}
+		  \emph{dark chocolate} and \emph{syrup}.
+
+		& \mono{filter ingredient /tag bitter taste} \\
+		  This matches \emph{bitter melon} and \emph{dark chocolate}, assuming they are the only ingredients tagged
+		  with \emph{bitter taste}.
+
+		& \mono{filter ingredient /tag frequently used /tag sweet} \\
+		  This matches \emph{sugar}, if it is the only ingredient tagged \bld{both} \emph{frequently used} and \emph{sweet}.
+
+		& \mono{filter ingredient /expiry 2020-12-01 /expiry 2020-10-31 /expiry 2023-01-01} \\
+		  This matches \emph{apple}, if it is the only ingredient expiring before \emph{2020-10-31}. Note that only the
+		  earliest date is considered here (in this case, 31st October 2020), and the rest are ignored.
+
+		& \mono{filter ingredient /tag powdery /expiry 2020-12-31 /tag bakery /name soda} \\
+		  This matches \emph{baking soda}, assuming it is the only ingredient that matches all the specified criteria.
+	\end{bulletlist}
+
+	To illustrate, suppose you want to search for ingredients tagged both \emph{bakery} and \emph{sweet}, expiring before
+	\emph{2021-12-31} and containing \emph{sugar} in the name; you can use
+	\mono{filter ingredient /tag bakery}\\
+	\mono{/expiry 2021-12-31 /tag sweet /name sugar}:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat*
+		\img{145mm}{images/filter_ingredient_1.png}
+		\caption{The initial list of ingredients}
+	\end{figure}
+
+	After executing the command, similar to the effect of \mono{filter recipe} command, the ingredient list has changed, showing the only matching ingredients, \emph{Brown Sugar} and \emph{Granulated Sugar}:
+
+	\begin{figure}[!htbp]\centering\ContinuedFloat
+		\img{145mm}{images/filter_ingredient_2.png}
+		\caption{The ingredients matching all the provided criteria}
+	\end{figure}
+
+	Note that \emph{Honey}, which was also tagged \emph{bakery} and \emph{sweet} and would expire before \emph{2021-12-31}, was not included because its name does not contain \emph{sugar}.
+
+	To reset the search filter or go back to the full ingredient view, you can click the Ingredients button or run the
+	\mono{list ingredients} command.
+
+% end subsubsection
+
+
+
+
+
+
+\pagebreak
+\hypertarget{EditIngredientCommand}{}
+\subsubsection{Editing Ingredients — \texttt{\bld{edit} ingredient}}
+
+	This command edits the given ingredient, in a similar fashion to the \hyperlink{EditRecipeCommand}{\mono{edit recipe}} command.
+	However, currently its functionality is limited to only editing the tags of an ingredient (more features coming soon!).
+
+	Do refer to the documention on the \hyperlink{EditRecipeCommand}{\mono{edit recipe}} command above to find out how edit-descriptors
+	work; this command currently only supports \mono{/tag:add} and \mono{/tag:delete}.
+
+	It is an error to delete a tag from an ingredient that did not contain that tag, and similarly to add a duplicate tag to an ingredient.
+
+	\bld{Usage:} \begin{blockofcode}{text}
+		edit ingredient |\itemref{}|
+			[/tag:<action> <tag-name>]...
+	\end{blockofcode}
+
+	Examples:
+	\begin{bulletlist}
+		& \mono{edit ingredient \#4 /tag:add frozen} \\
+		  This tags the fourth ingredient currently shown in the ingerdient list with \emph{frozen}.
+
+		& \mono{edit ingredient sprinkles /tag:delete fridge} \\
+		  This removes the tag \emph{fridge} from the ingredient named \enquote{sprinkles}.
+	\end{bulletlist}
+
+% end subsubsection
+
+
+
+
+
+
+
+
+
+
+
+% end subsection
