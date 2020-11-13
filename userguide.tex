@@ -16,8 +16,8 @@
 
 \hypersetup{
 	colorlinks=true,
-	linkcolor=cyan,
-	urlcolor=magenta
+	linkcolor=RoyalBlue,
+	urlcolor=WildStrawberry
 }
 
 \setminted{autogobble,style=autumn,tabsize=4}
@@ -81,23 +81,24 @@
 \renewcommand{\emph}[1]{\textit{#1}}
 
 % change section heading sizes
-
+% \color[HTML]{e46c0a}
+\definecolor{HeaderColour}{HTML}{fb8c00}
 \titleformat{\section}
-	{\Roboto\fontsize{25pt}{30pt}\selectfont\color[HTML]{e46c0a}}
+	{\Roboto\fontsize{25pt}{30pt}\selectfont\color{HeaderColour}}
 	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\color{Black}\thesection\hfill}}
 	{0.0em}
 	{}
 	[{\makebox[0mm][l]{}}]
 
 \titleformat{\subsection}
-	{\Roboto\fontsize{19pt}{24pt}\selectfont\color[HTML]{e46c0a}}
+	{\Roboto\fontsize{19pt}{24pt}\selectfont\color{HeaderColour}}
 	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\color{Black}\thesubsection\hfill}}
 	{0.0em}
 	{}
 	[{\makebox[0mm][l]{}}]
 
 \titleformat{\subsubsection}
-	{\Roboto\fontsize{16pt}{19pt}\selectfont\color[HTML]{e46c0a}}
+	{\Roboto\fontsize{16pt}{19pt}\selectfont\color{HeaderColour}}
 	{\llap{\hspace*{-\titleNumberInsetLength}\MyriadPro\fontsize{12pt}{14pt}\selectfont\color{Black}\thesubsubsection\hfill}}
 	{0.0em}
 	{}
@@ -185,7 +186,7 @@
 % turn off link colouring for the table of contents
 % (if not that shit will be blue)
 {
-	% \hypersetup{hidelinks}
+	\hypersetup{hidelinks}
 	\tableofcontents
 	\pagebreak
 }
